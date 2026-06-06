@@ -77,11 +77,19 @@
   const phone = params.get('phone') || '';
   const producto = params.get('producto') || '';
   const negocio = params.get('negocio') || 'Tienda';
+  const yapeLink = `yape://transfer?phone=51${phone}&amount=${monto}`;
 
   document.getElementById('monto').textContent = `S/. ${parseFloat(monto).toFixed(2)}`;
   document.getElementById('producto').textContent = producto ? `Por: ${producto}` : '';
   document.getElementById('negocio').textContent = negocio;
-  document.getElementById('btn_yape').href = `yape://transfer?phone=51${phone}&amount=${monto}`;
+  document.getElementById('btn_yape').href = yapeLink;
+
+  // Auto-redirect al abrir la página
+  window.onload = () => {
+    setTimeout(() => {
+      window.location.href = yapeLink;
+    }, 800);
+  };
 </script>
 </body>
 </html>
