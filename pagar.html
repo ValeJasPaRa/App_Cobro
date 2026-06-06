@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pagar con Yape</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .card {
+    background: white;
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+  }
+  .logo {
+    width: 72px; height: 72px;
+    background: #6B21A8;
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 36px;
+  }
+  .titulo { font-size: 22px; font-weight: 700; color: #111; margin-bottom: 6px; }
+  .subtitulo { font-size: 14px; color: #888; margin-bottom: 2rem; }
+  .monto-label { font-size: 13px; color: #888; margin-bottom: 6px; }
+  .monto { font-size: 48px; font-weight: 700; color: #111; margin-bottom: 0.25rem; }
+  .producto { font-size: 14px; color: #666; margin-bottom: 2rem; }
+  .btn-yape {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    background: #6B21A8;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    margin-bottom: 12px;
+  }
+  .btn-yape:hover { background: #7c3aed; }
+  .btn-yape:active { transform: scale(0.98); }
+  .hint { font-size: 12px; color: #bbb; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">💛</div>
+  <div class="titulo">Pago pendiente</div>
+  <div class="subtitulo" id="negocio">Tienda de mamá</div>
+  <div class="monto-label">Monto a pagar</div>
+  <div class="monto" id="monto">S/. 0.00</div>
+  <div class="producto" id="producto"></div>
+  <a class="btn-yape" id="btn_yape" href="#">💛 Pagar con Yape</a>
+  <div class="hint">Al presionar se abrirá tu app de Yape</div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const monto = params.get('monto') || '0.00';
+  const phone = params.get('phone') || '';
+  const producto = params.get('producto') || '';
+  const negocio = params.get('negocio') || 'Tienda';
+
+  document.getElementById('monto').textContent = `S/. ${parseFloat(monto).toFixed(2)}`;
+  document.getElementById('producto').textContent = producto ? `Por: ${producto}` : '';
+  document.getElementById('negocio').textContent = negocio;
+  document.getElementById('btn_yape').href = `yape://transfer?phone=51${phone}&amount=${monto}`;
+</script>
+</body>
+</html>
